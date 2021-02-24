@@ -6,7 +6,7 @@
 			<template v-if="showIcon===true || showIcon === 'true'">
 				<uni-icons color="#000" size="20" type="arrowleft" />
 			</template>
-			<template v-else><text class="uni-pagination__child-btn">{{ prevText }}</text></template>
+			<template v-else><text class="uni-pagination__child-btn">{{ prevPageText }}</text></template>
 		</view>
 		<view class="uni-pagination__num">
 			<view class="uni-pagination__num-current">
@@ -19,7 +19,7 @@
 			<template v-if="showIcon===true || showIcon === 'true'">
 				<uni-icons color="#000" size="20" type="arrowright" />
 			</template>
-			<template v-else><text class="uni-pagination__child-btn">{{ nextText }}</text></template>
+			<template v-else><text class="uni-pagination__child-btn">{{ nextPageText }}</text></template>
 		</view>
 	</view>
 </template>
@@ -38,17 +38,19 @@
 	 * @property {Number} showIcon = [true|false] 是否以 icon 形式展示按钮
 	 * @event {Function} change 点击页码按钮时触发 ,e={type,current} current为当前页，type值为：next/prev，表示点击的是上一页还是下一个
 	 */
-
+	import {
+		initVueI18n
+	} from '@dcloudio/uni-i18n'
+	import messages from '../../i18n/index.js'
+	const { t } = initVueI18n(messages)
 	export default {
 		name: 'UniPagination',
 		props: {
 			prevText: {
-				type: String,
-				default: '上一页'
+				type: String
 			},
 			nextText: {
-				type: String,
-				default: '下一页'
+				type: String
 			},
 			current: {
 				type: [Number, String],
@@ -73,6 +75,12 @@
 			}
 		},
 		computed: {
+			prevPageText() {
+				return this.prevText || t('uni-pagination.prevText')
+			},
+			nextPageText() {
+				return this.nextText || t('uni-pagination.nextText')
+			},
 			maxPage() {
 				let maxPage = 1
 				let total = Number(this.total)
