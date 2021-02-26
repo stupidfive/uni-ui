@@ -469,7 +469,7 @@
 					const day = now.getDate()
 					dateBase = year + '/' + month + '/' + day + ' '
 				}
-				if (Number(value) && typeof value !== NaN) {
+				if (Number(value) && !isNaN(value)) {
 					value = parseInt(value)
 					dateBase = 0
 				}
